@@ -1,478 +1,2166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ali Al-Mansouri · Security Researcher</title>
-  <meta name="description" content="Ali Al-Mansouri — Penetration tester specialising in Web & Android security. BAC · IDOR · Business Logic." />
-  <meta name="author" content="Ali Al-Mansouri" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://AliAlMansorisec.github.io" />
-  <meta property="og:title"       content="Ali Al-Mansouri · Security Researcher" />
-  <meta property="og:description" content="Penetration tester. Web & Android. BAC · IDOR · Business Logic." />
-  <meta property="og:type"        content="profile" />
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Ali Al-Mansouri","jobTitle":"Security Researcher","url":"https://AliAlMansorisec.github.io","sameAs":["https://github.com/AliAlMansori","https://linkedin.com/in/username","https://x.com/username"]}</script>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ali Al-Mansori — Web & API Penetration Tester</title>
+    <meta name="description" content="Web & API Penetration Tester specializing in OWASP Top 10, bug bounty hunting, and application security research.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --transition-theme: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+        }
 
-  <style>
-    :root {
-      --bg:    #000;
-      --card:  #0b0b0b;
-      --raise: #141414;
-      --edge:  rgba(255,255,255,0.07);
-      --edgehi:rgba(255,255,255,0.18);
-      --white: #fff;
-      --pearl: #e6e6e6;
-      --silver:#a8a8a8;
-      --stone: #606060;
-      --ghost: #303030;
-      --serif:'Cormorant Garamond',Georgia,serif;
-      --mono: 'DM Mono',monospace;
-      --sans: 'DM Sans',system-ui,sans-serif;
-      --ease: cubic-bezier(0.22,1,0.36,1);
-    }
+        [data-theme="dark"] {
+            --bg: #0a0a0a;
+            --bg2: #141414;
+            --bg3: #1e1e1e;
+            --surface: #161616;
+            --border: rgba(255, 255, 255, 0.12);
+            --border-h: rgba(255, 255, 255, 0.28);
+            --text: #ffffff;
+            --text2: #b0b0b0;
+            --text3: #707070;
+            --text4: #3a3a3a;
+            --accent: #ffffff;
+            --accent-inv: #000000;
+            --nav-blur: rgba(10, 10, 10, 0.95);
+            --shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
+            --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.5);
+            --scrollbar: #2a2a2a;
+            --selection-bg: #ffffff;
+            --selection-c: #000000;
+            --owasp-web: #ff6b6b;
+            --owasp-api: #4ecdc4;
+            --badge-live: #ffffff;
+            --badge-prog: #b0b0b0;
+            --badge-plan: #707070;
+        }
 
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    html{-webkit-font-smoothing:antialiased;}
+        [data-theme="light"] {
+            --bg: #ffffff;
+            --bg2: #f5f5f5;
+            --bg3: #e8e8e8;
+            --surface: #ffffff;
+            --border: rgba(0, 0, 0, 0.12);
+            --border-h: rgba(0, 0, 0, 0.28);
+            --text: #0a0a0a;
+            --text2: #4a4a4a;
+            --text3: #8a8a8a;
+            --text4: #c0c0c0;
+            --accent: #0a0a0a;
+            --accent-inv: #ffffff;
+            --nav-blur: rgba(255, 255, 255, 0.95);
+            --shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+            --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --scrollbar: #c0c0c0;
+            --selection-bg: #0a0a0a;
+            --selection-c: #ffffff;
+            --owasp-web: #e63946;
+            --owasp-api: #2a9d8f;
+            --badge-live: #0a0a0a;
+            --badge-prog: #4a4a4a;
+            --badge-plan: #8a8a8a;
+        }
 
-    body {
-      background: var(--bg);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2.5rem 1.2rem;
-      font-family: var(--sans);
-      overflow-x: hidden;
-    }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: var(--transition-theme);
+        }
+        body.ar {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+        }
+        ::selection {
+            background: var(--selection-bg);
+            color: var(--selection-c);
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        button {
+            cursor: pointer;
+            font-family: inherit;
+            background: none;
+            border: none;
+            color: inherit;
+        }
+        img {
+            display: block;
+            max-width: 100%;
+        }
+        .syne {
+            font-family: 'Syne', sans-serif;
+        }
+        body.ar .syne {
+            font-family: 'Cairo', sans-serif;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar);
+            border-radius: 2px;
+        }
 
-    body::before {
-      content:'';
-      position:fixed;inset:0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.016) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,0.016) 1px,transparent 1px);
-      background-size:80px 80px;
-      mask-image:radial-gradient(ellipse 60% 60% at 50% 40%,black,transparent 80%);
-      pointer-events:none;z-index:0;
-    }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes glow {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: 200% center;
+            }
+            100% {
+                background-position: -200% center;
+            }
+        }
+        .fade-up {
+            animation: fadeUp 0.65s cubic-bezier(.22, .68, 0, 1.2) forwards;
+            opacity: 0;
+        }
+        .d1 {
+            animation-delay: 0s;
+        }
+        .d2 {
+            animation-delay: .1s;
+        }
+        .d3 {
+            animation-delay: .2s;
+        }
+        .d4 {
+            animation-delay: .3s;
+        }
+        .d5 {
+            animation-delay: .42s;
+        }
+        .d6 {
+            animation-delay: .54s;
+        }
 
-    /* ══ CARD ══ */
-    .card {
-      position:relative;z-index:1;
-      max-width:580px;width:100%;
-      background:var(--card);
-      border:1px solid var(--edge);
-      border-radius:32px;
-      padding:3rem 2.8rem 3.2rem;
-      display:flex;flex-direction:column;align-items:center;
-      overflow:hidden;
-    }
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            transition: background 0.35s ease, border-bottom 0.35s ease, box-shadow 0.35s ease;
+        }
+        #navbar.scrolled {
+            background: var(--nav-blur);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 28px;
+        }
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            transition: opacity 0.2s;
+        }
+        body.ar .nav-logo {
+            font-family: 'Cairo', sans-serif;
+        }
+        .nav-logo:hover {
+            opacity: 0.7;
+        }
+        .nav-logo .dot {
+            color: var(--text3);
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text2);
+            position: relative;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--text);
+            transition: width 0.25s ease;
+        }
+        body.ar .nav-links a::after {
+            left: auto;
+            right: 0;
+        }
+        .nav-links a:hover {
+            color: var(--text);
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a.active {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-btn {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 1px solid var(--border);
+            color: var(--text2);
+            padding: 7px 16px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            background: transparent;
+        }
+        .nav-btn:hover {
+            border-color: var(--border-h);
+            color: var(--text);
+            background: var(--bg3);
+        }
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            background: transparent;
+            color: var(--text2);
+        }
+        .theme-toggle:hover {
+            border-color: var(--border-h);
+            color: var(--text);
+            background: var(--bg3);
+        }
+        .hire-nav {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: var(--accent);
+            color: var(--accent-inv);
+            padding: 9px 20px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        .hire-nav:hover {
+            opacity: 0.85;
+        }
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+        .burger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text2);
+            transition: all 0.25s ease;
+            transform-origin: center;
+        }
+        .burger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .burger.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .burger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            border-top: 1px solid var(--border);
+            background: var(--nav-blur);
+            backdrop-filter: blur(24px);
+            padding: 12px 28px 24px;
+            animation: slideDown 0.2s ease;
+        }
+        .mobile-menu.open {
+            display: flex;
+        }
+        .mobile-menu a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text2);
+            transition: color 0.15s;
+            font-weight: 500;
+        }
+        .mobile-menu a:hover {
+            color: var(--text);
+        }
+        .mob-hire {
+            margin-top: 14px;
+            background: var(--accent);
+            color: var(--accent-inv);
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 14px;
+            border: none;
+        }
 
-    .card::before {
-      content:'';position:absolute;
-      top:0;left:10%;right:10%;height:1px;
-      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent);
-    }
+        section {
+            padding: 110px 0 80px;
+        }
+        .section-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text3);
+            margin-bottom: 14px;
+            font-weight: 500;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(40px, 6vw, 80px);
+            line-height: 0.96;
+            letter-spacing: -0.025em;
+        }
+        body.ar .section-title {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.05;
+        }
+        .muted-line {
+            color: var(--text2);
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 18px 0 52px;
+        }
 
-    /* stagger */
-    .card>*{opacity:0;animation:up .75s var(--ease) forwards;}
-    .card>*:nth-child(1){animation-delay:.05s;}
-    .card>*:nth-child(2){animation-delay:.13s;}
-    .card>*:nth-child(3){animation-delay:.21s;}
-    .card>*:nth-child(4){animation-delay:.29s;}
-    .card>*:nth-child(5){animation-delay:.37s;}
-    .card>*:nth-child(6){animation-delay:.43s;}
-    .card>*:nth-child(7){animation-delay:.49s;}
-    .card>*:nth-child(8){animation-delay:.55s;}
+        #home {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 100px;
+            padding-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        #home::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.5;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+        }
+        #home .container {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--border);
+            padding: 8px 18px;
+            margin-bottom: 40px;
+            background: var(--bg2);
+        }
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text);
+            animation: glow 2.2s ease infinite;
+        }
+        .hero-badge span {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text2);
+            font-weight: 500;
+        }
+        .hero-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(60px, 10vw, 130px);
+            line-height: 0.92;
+            letter-spacing: -0.035em;
+            margin-bottom: 24px;
+        }
+        body.ar .hero-name {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.05;
+        }
+        [data-theme="dark"] .hero-name .name-main {
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 50%, #ffffff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+        [data-theme="light"] .hero-name .name-main {
+            background: linear-gradient(135deg, #0a0a0a 0%, #555555 50%, #0a0a0a 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+        .typewriter-wrap {
+            font-size: clamp(16px, 2.4vw, 24px);
+            color: var(--text2);
+            height: 38px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .tw-cursor {
+            animation: blink 1s step-end infinite;
+            color: var(--text2);
+            font-weight: 300;
+        }
+        .hero-desc {
+            font-size: 14.5px;
+            color: var(--text2);
+            max-width: 540px;
+            line-height: 1.85;
+            margin-bottom: 44px;
+        }
+        .hero-desc strong {
+            color: var(--text);
+            font-weight: 700;
+        }
+        .hero-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 64px;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: var(--accent-inv);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding: 15px 34px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            font-family: inherit;
+        }
+        .btn-primary:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-secondary {
+            border: 1px solid var(--border);
+            color: var(--text2);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            padding: 15px 34px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            background: transparent;
+            font-weight: 500;
+        }
+        .btn-secondary:hover {
+            border-color: var(--border-h);
+            color: var(--text);
+            transform: translateY(-1px);
+        }
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 500px;
+            margin-bottom: 52px;
+            border: 1px solid var(--border);
+            background: var(--bg2);
+        }
+        .stat {
+            flex: 1;
+            min-width: 100px;
+            padding: 24px 20px;
+            border-right: 1px solid var(--border);
+            transition: background 0.2s;
+            text-align: center;
+        }
+        .stat:last-child {
+            border-right: none;
+        }
+        body.ar .stat {
+            border-right: none;
+            border-left: 1px solid var(--border);
+        }
+        body.ar .stat:last-child {
+            border-left: none;
+        }
+        .stat:hover {
+            background: var(--bg3);
+        }
+        .stat-val {
+            font-family: 'Syne', sans-serif;
+            font-size: 34px;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+        body.ar .stat-val {
+            font-family: 'Cairo', sans-serif;
+        }
+        .stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text3);
+            font-weight: 500;
+        }
+        .tools-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text3);
+            margin-bottom: 14px;
+            font-weight: 500;
+        }
+        .tools-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .chip {
+            border: 1px solid var(--border);
+            color: var(--text3);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 8px 16px;
+            background: var(--bg2);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+        .chip:hover {
+            border-color: var(--border-h);
+            color: var(--text2);
+            background: var(--bg3);
+        }
 
-    @keyframes up{
-      from{opacity:0;transform:translateY(24px);}
-      to{opacity:1;transform:translateY(0);}
-    }
+        #about {
+            padding: 80px 0;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 72px;
+            align-items: center;
+        }
+        .about-text p {
+            font-size: 14px;
+            color: var(--text2);
+            line-height: 1.9;
+            margin-bottom: 22px;
+        }
+        .about-link {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 4px;
+            transition: border-color 0.2s;
+            font-weight: 600;
+        }
+        .about-link:hover {
+            border-color: var(--text);
+        }
+        .skills-list {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+        .skill-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text2);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        .skill-bar {
+            height: 2px;
+            background: var(--border);
+        }
+        .skill-fill {
+            height: 2px;
+            background: var(--text);
+            width: 0;
+            transition: width 1.4s cubic-bezier(.4, 0, .2, 1);
+        }
 
-    /* ══ AVATAR ══ */
-    .avatar-wrap{
-      margin-bottom:1.8rem;
-      position:relative;width:124px;height:124px;flex-shrink:0;
-    }
-    .avatar-wrap::before{
-      content:'';position:absolute;inset:-4px;border-radius:50%;
-      background:conic-gradient(
-        from 0deg,
-        transparent 0%,rgba(255,255,255,.9) 12%,
-        transparent 24%,rgba(255,255,255,.08) 50%,
-        transparent 64%,rgba(255,255,255,.9) 88%,
-        transparent 100%
-      );
-      animation:spin 6s linear infinite;
-    }
-    .avatar-wrap::after{
-      content:'';position:absolute;inset:2px;
-      background:var(--card);border-radius:50%;z-index:1;
-    }
-    @keyframes spin{to{transform:rotate(360deg);}}
-    .avatar-img{
-      position:absolute;inset:6px;
-      width:calc(100% - 12px);height:calc(100% - 12px);
-      border-radius:50%;object-fit:cover;z-index:2;background:var(--raise);
-    }
-    .avatar-fb{
-      position:absolute;inset:6px;border-radius:50%;background:var(--raise);
-      display:none;align-items:center;justify-content:center;font-size:42px;z-index:2;
-    }
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+        .filter-btn {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 1px solid var(--border);
+            color: var(--text3);
+            padding: 8px 18px;
+            background: transparent;
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+        .filter-btn:hover {
+            border-color: var(--border-h);
+            color: var(--text2);
+        }
+        .filter-btn.active {
+            border-color: var(--text);
+            color: var(--text);
+            background: var(--bg3);
+            font-weight: 600;
+        }
 
-    /* ══ STATUS ══ */
-    .status{
-      display:inline-flex;align-items:center;gap:9px;
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.16);
-      padding:7px 22px;border-radius:100px;
-      font-family:var(--mono);font-size:0.72rem;
-      color:var(--pearl);letter-spacing:1.2px;text-transform:uppercase;
-      margin-bottom:1.6rem;
-      box-shadow:0 0 18px rgba(255,255,255,0.04);
-    }
-    .dot{
-      width:7px;height:7px;border-radius:50%;
-      background:var(--white);
-      box-shadow:0 0 10px rgba(255,255,255,1),0 0 20px rgba(255,255,255,.5);
-      animation:pulse 2.5s ease-in-out infinite;
-    }
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.8);}}
+        #projects {
+            padding: 80px 0;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--border);
+        }
+        .project-card {
+            background: var(--bg);
+            padding: 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border: 1px solid transparent;
+            transition: border-color 0.2s, background 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+        .project-card:hover {
+            border-color: var(--border-h);
+            background: var(--bg2);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .project-card.hidden {
+            display: none;
+        }
+        .card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .card-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 12px;
+            color: var(--text4);
+            font-weight: 700;
+        }
+        body.ar .card-num {
+            font-family: 'Cairo', sans-serif;
+        }
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border: 1px solid;
+            padding: 5px 14px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+        .status-live {
+            color: var(--badge-live);
+            border-color: var(--border-h);
+        }
+        .status-live .sdot {
+            background: var(--badge-live);
+            animation: glow 2s infinite;
+        }
+        .status-prog {
+            color: var(--badge-prog);
+            border-color: var(--border);
+        }
+        .status-prog .sdot {
+            background: var(--badge-prog);
+        }
+        .status-plan {
+            color: var(--badge-plan);
+            border-color: var(--border);
+        }
+        .status-plan .sdot {
+            background: var(--badge-plan);
+        }
+        .sdot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+        .card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--text);
+        }
+        body.ar .card-title {
+            font-family: 'Cairo', sans-serif;
+        }
+        .card-desc {
+            font-size: 13px;
+            color: var(--text2);
+            line-height: 1.85;
+            flex: 1;
+        }
+        .card-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .card-tool {
+            border: 1px solid var(--border);
+            color: var(--text3);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            padding: 5px 12px;
+            background: var(--bg2);
+            font-weight: 500;
+        }
+        .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+        .card-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text2);
+            transition: color 0.15s;
+            font-weight: 500;
+        }
+        .card-link:hover {
+            color: var(--text);
+        }
+        .card-soon {
+            font-size: 11px;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
 
-    /* ══ NAME ══ */
-    .name{
-      font-family:var(--serif);
-      font-size:4.4rem;font-weight:300;
-      color:var(--white);text-align:center;
-      line-height:1.02;letter-spacing:.5px;
-      margin-bottom:.9rem;
-    }
-    .name span{font-style:italic;color:var(--pearl);}
+        #owasp-kb {
+            padding: 80px 0;
+        }
+        .kb-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+        .kb-column {}
+        .kb-column-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        body.ar .kb-column-title {
+            font-family: 'Cairo', sans-serif;
+        }
+        .kb-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .kb-dot.web {
+            background: var(--owasp-web);
+        }
+        .kb-dot.api {
+            background: var(--owasp-api);
+        }
+        .kb-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .kb-item {
+            border: 1px solid var(--border);
+            background: var(--bg);
+            transition: all 0.2s;
+        }
+        .kb-item:hover {
+            border-color: var(--border-h);
+        }
+        .kb-item.open {
+            border-color: var(--border-h);
+            background: var(--bg2);
+        }
+        .kb-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+        .kb-header:hover {
+            background: var(--bg2);
+        }
+        .kb-header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .kb-code {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 13px;
+            color: var(--text);
+            min-width: 40px;
+        }
+        body.ar .kb-code {
+            font-family: 'Cairo', sans-serif;
+        }
+        .kb-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .kb-count {
+            font-size: 10px;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+        }
+        .kb-chevron {
+            color: var(--text3);
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+        .kb-chevron.open {
+            transform: rotate(180deg);
+        }
+        .kb-content {
+            display: none;
+            padding: 0 20px 18px;
+            border-top: 1px solid var(--border);
+        }
+        .kb-content.open {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+        .kb-files {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding-top: 12px;
+        }
+        .kb-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: var(--text2);
+            transition: all 0.15s;
+            border-left: 2px solid transparent;
+        }
+        body.ar .kb-file {
+            border-left: none;
+            border-right: 2px solid transparent;
+        }
+        .kb-file:hover {
+            color: var(--text);
+            background: var(--bg3);
+            border-left-color: var(--text);
+        }
+        body.ar .kb-file:hover {
+            border-left-color: transparent;
+            border-right-color: var(--text);
+        }
+        .kb-file-icon {
+            color: var(--text3);
+            font-size: 11px;
+        }
+        .kb-file-link {
+            color: inherit;
+            transition: color 0.15s;
+        }
+        .kb-file-link:hover {
+            color: var(--text);
+        }
 
-    /* ══ SPEC ══ */
-    .spec-row{
-      display:flex;flex-wrap:wrap;justify-content:center;
-      gap:7px;margin-bottom:2.2rem;
-    }
-    .spec{
-      font-family:var(--mono);font-size:0.68rem;
-      letter-spacing:2px;text-transform:uppercase;
-      color:var(--stone);padding:6px 16px;
-      border:1px solid var(--edge);border-radius:100px;
-      background:rgba(255,255,255,0.025);
-    }
+        #methodology {
+            padding: 80px 0;
+        }
+        .flow-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 44px;
+        }
+        .flow-step-btn {
+            border: 1px solid var(--border);
+            padding: 9px 16px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text3);
+            transition: all 0.15s;
+            cursor: pointer;
+            background: transparent;
+            font-weight: 500;
+        }
+        .flow-step-btn:hover {
+            color: var(--text2);
+            border-color: var(--border-h);
+        }
+        .flow-step-btn.active {
+            color: var(--text);
+            border-color: var(--border-h);
+            background: var(--bg3);
+            font-weight: 600;
+        }
+        .flow-arrow {
+            color: var(--text4);
+            font-size: 12px;
+            padding: 0 4px;
+        }
+        .phases-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+        .phase-item {
+            overflow: hidden;
+        }
+        .phase-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 28px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .phase-header:hover {
+            background: var(--bg2);
+        }
+        .phase-header.open {
+            background: var(--bg2);
+            border-color: var(--border-h);
+        }
+        .phase-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .phase-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 12px;
+            color: var(--text4);
+            font-weight: 700;
+            min-width: 30px;
+        }
+        body.ar .phase-num {
+            font-family: 'Cairo', sans-serif;
+        }
+        .phase-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+        body.ar .phase-name {
+            font-family: 'Cairo', sans-serif;
+        }
+        .phase-sub {
+            font-size: 11px;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+        }
+        .phase-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .phase-tools-preview {
+            display: flex;
+            gap: 6px;
+        }
+        .phase-tool-tag {
+            border: 1px solid var(--border);
+            color: var(--text4);
+            font-size: 9px;
+            padding: 4px 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            background: var(--bg3);
+            font-weight: 500;
+        }
+        .phase-chevron {
+            color: var(--text3);
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+        .phase-chevron.open {
+            transform: rotate(180deg);
+        }
+        .phase-content {
+            display: none;
+            padding: 32px 28px;
+            border: 1px solid var(--border-h);
+            border-top: none;
+            background: var(--bg2);
+            animation: slideDown 0.25s ease;
+        }
+        .phase-content.open {
+            display: block;
+        }
+        .phase-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 48px;
+        }
+        .phase-desc {
+            font-size: 13px;
+            color: var(--text2);
+            line-height: 1.9;
+            margin-bottom: 22px;
+        }
+        .phase-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .phase-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text2);
+            line-height: 1.7;
+        }
+        .check {
+            color: var(--text3);
+            margin-top: 3px;
+            font-size: 11px;
+        }
+        .phase-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .sidebar-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text3);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        .phase-tools-full {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .phase-tool {
+            border: 1px solid var(--border);
+            color: var(--text3);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 6px 14px;
+            transition: all 0.15s;
+            background: var(--bg);
+            font-weight: 500;
+        }
+        .phase-tool:hover {
+            border-color: var(--border-h);
+            color: var(--text2);
+        }
+        .phase-tip {
+            border: 1px solid var(--border);
+            padding: 20px;
+            background: var(--bg);
+        }
+        .tip-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text3);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .tip-text {
+            font-size: 12px;
+            color: var(--text2);
+            line-height: 1.75;
+            font-style: italic;
+        }
+        .owasp-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            margin-top: 44px;
+        }
+        .owasp-cell {
+            border: 1px solid var(--border);
+            padding: 14px 12px;
+            font-size: 10px;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            background: var(--bg2);
+            transition: all 0.15s;
+            cursor: default;
+            font-weight: 500;
+        }
+        .owasp-cell:hover {
+            border-color: var(--border-h);
+            color: var(--text2);
+            background: var(--bg3);
+        }
 
-    /* ══ RULE ══ */
-    .rule{
-      width:100%;height:1px;
-      background:linear-gradient(90deg,transparent,var(--edgehi),transparent);
-      margin-bottom:2.2rem;
-    }
+        #writeups {
+            padding: 80px 0;
+        }
+        .writeups-table {
+            border-top: 1px solid var(--border);
+        }
+        .table-head {
+            display: grid;
+            grid-template-columns: 40px 1fr 130px 100px 80px 80px;
+            gap: 16px;
+            padding: 14px 18px;
+        }
+        .th {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text4);
+            font-weight: 600;
+        }
+        .writeup-row {
+            display: grid;
+            grid-template-columns: 40px 1fr 130px 100px 80px 80px;
+            gap: 16px;
+            align-items: center;
+            padding: 22px 18px;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        .writeup-row:hover {
+            background: var(--bg2);
+        }
+        .writeup-row.hidden {
+            display: none;
+        }
+        .wr-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 11px;
+            color: var(--text4);
+            font-weight: 700;
+        }
+        body.ar .wr-num {
+            font-family: 'Cairo', sans-serif;
+        }
+        .wr-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .wr-platform {
+            font-size: 11px;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+        }
+        .cat-tag {
+            border: 1px solid var(--border);
+            color: var(--text2);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            padding: 4px 12px;
+            background: var(--bg2);
+            font-weight: 500;
+        }
+        .wr-diff {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text2);
+            font-weight: 500;
+        }
+        .read-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+        .read-link:hover {
+            color: var(--text);
+        }
+        .soon-tag {
+            font-size: 11px;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+        }
 
-    /* ══ CV BUTTON — LUXURY ══ */
-    .cv-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      position: relative;
-      padding: 15px 40px;
-      border-radius: 100px;
-      text-decoration: none;
-      font-family: var(--sans);
-      font-size: 0.92rem;
-      font-weight: 500;
-      letter-spacing: .8px;
-      text-transform: uppercase;
-      color: var(--bg);
-      background: var(--white);
-      margin-bottom: 2.6rem;
-      overflow: hidden;
-      transition: all .3s var(--ease);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.9),
-        0 8px 32px rgba(255,255,255,0.15),
-        0 2px 8px rgba(0,0,0,0.6);
-    }
+        #contact {
+            padding: 80px 0;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 64px;
+        }
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .field label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text2);
+            font-weight: 600;
+        }
+        .field input,
+        .field select,
+        .field textarea {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13px;
+            padding: 14px 18px;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+            width: 100%;
+            letter-spacing: 0.02em;
+        }
+        .field input::placeholder,
+        .field textarea::placeholder {
+            color: var(--text4);
+        }
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--border-h);
+            background: var(--bg3);
+        }
+        .field select option {
+            background: var(--bg2);
+            color: var(--text);
+        }
+        .field textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 8px;
+        }
+        .form-note {
+            font-size: 11px;
+            color: var(--text3);
+            font-weight: 500;
+        }
+        .success-box {
+            border: 1px solid var(--border);
+            padding: 60px 40px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            background: var(--bg2);
+        }
+        .success-icon {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--text);
+        }
+        .success-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        body.ar .success-title {
+            font-family: 'Cairo', sans-serif;
+        }
+        .success-sub {
+            font-size: 12px;
+            color: var(--text2);
+            line-height: 1.8;
+        }
+        .reset-btn {
+            font-size: 11px;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.15s;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        .reset-btn:hover {
+            color: var(--text);
+        }
+        .contact-side {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        .socials-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .social-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid var(--border);
+            padding: 16px 20px;
+            background: var(--bg2);
+            transition: border-color 0.2s, background 0.2s, transform 0.15s;
+        }
+        .social-item:hover {
+            border-color: var(--border-h);
+            background: var(--bg3);
+            transform: translateX(3px);
+        }
+        body.ar .social-item:hover {
+            transform: translateX(-3px);
+        }
+        .social-icon {
+            color: var(--text2);
+            font-size: 15px;
+            min-width: 22px;
+            text-align: center;
+        }
+        .social-info {
+            flex: 1;
+        }
+        .social-name {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text);
+            font-weight: 600;
+        }
+        .social-handle {
+            font-size: 11px;
+            color: var(--text3);
+            margin-top: 2px;
+        }
+        .social-desc {
+            font-size: 10px;
+            color: var(--text4);
+            text-align: right;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+        }
+        body.ar .social-desc {
+            text-align: left;
+        }
+        .avail-box {
+            border: 1px solid var(--border);
+            padding: 24px;
+            background: var(--bg2);
+        }
+        .avail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .avail-row:last-child {
+            border-bottom: none;
+        }
+        .avail-key {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            color: var(--text3);
+            font-weight: 500;
+        }
+        .avail-val {
+            font-size: 11px;
+            color: var(--text2);
+            font-weight: 500;
+        }
+        .cta-strip {
+            border: 1px solid var(--border);
+            padding: 48px 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-top: 64px;
+            background: var(--bg2);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .cta-strip:hover {
+            border-color: var(--border-h);
+            box-shadow: var(--shadow);
+        }
+        .cta-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        body.ar .cta-title {
+            font-family: 'Cairo', sans-serif;
+        }
+        .cta-sub {
+            font-size: 12px;
+            color: var(--text3);
+            font-weight: 500;
+        }
 
-    /* spinning arc around CV button */
-    .cv-btn-wrap {
-      position: relative;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 2.6rem;
-    }
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 36px 0;
+            background: var(--bg2);
+        }
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text);
+        }
+        body.ar .footer-logo {
+            font-family: 'Cairo', sans-serif;
+        }
+        .footer-logo .dot {
+            color: var(--text3);
+        }
+        .footer-copy {
+            font-size: 11px;
+            color: var(--text4);
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            font-weight: 500;
+        }
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        .footer-links a {
+            font-size: 11px;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            transition: color 0.15s;
+            font-weight: 500;
+        }
+        .footer-links a:hover {
+            color: var(--text);
+        }
 
-    /* remove margin from btn itself now wrapper handles it */
-    .cv-btn { margin-bottom: 0; }
-
-    .cv-btn-wrap::before {
-      content: '';
-      position: absolute;
-      inset: -5px;
-      border-radius: 100px;
-      background: conic-gradient(
-        from 0deg,
-        transparent 0%,
-        rgba(255,255,255,0.9) 12%,
-        transparent 28%,
-        rgba(255,255,255,0.05) 55%,
-        transparent 68%,
-        rgba(255,255,255,0.9) 88%,
-        transparent 100%
-      );
-      animation: spin 4s linear infinite;
-      z-index: 0;
-    }
-
-    .cv-btn-wrap::after {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      border-radius: 100px;
-      background: var(--card);
-      z-index: 1;
-    }
-
-    .cv-btn { z-index: 2; }
-
-    /* inner shimmer sweep */
-    .cv-btn .shine {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(105deg,
-        transparent 30%,
-        rgba(255,255,255,0.35) 50%,
-        transparent 70%
-      );
-      transform: translateX(-100%);
-      transition: transform .55s ease;
-    }
-
-    .cv-btn:hover .shine { transform: translateX(100%); }
-
-    .cv-btn i {
-      font-size: 1rem;
-      transition: transform .3s var(--ease);
-    }
-
-    .cv-btn:hover {
-      background: var(--pearl);
-      transform: translateY(-3px);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.8),
-        0 16px 48px rgba(255,255,255,0.22),
-        0 4px 12px rgba(0,0,0,0.6);
-    }
-
-    .cv-btn:hover i { transform: translateY(2px); }
-    .cv-btn:active  { transform: translateY(0); }
-
-    /* ══ SOCIAL ══ */
-    .social-label{
-      font-family:var(--mono);font-size:0.62rem;
-      letter-spacing:4px;text-transform:uppercase;
-      color:var(--ghost);margin-bottom:1.2rem;text-align:center;
-    }
-
-    .social-grid{
-      display:grid;grid-template-columns:repeat(3,1fr);
-      gap:10px;width:100%;
-    }
-
-    /* each social card */
-    .soc {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      padding: 22px 10px 17px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.11);
-      border-radius: 18px;
-      text-decoration: none;
-      color: var(--white);           /* WHITE icons by default */
-      transition: all .3s var(--ease);
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* spinning arc — hidden by default, shown on hover */
-    .soc::before {
-      content: '';
-      position: absolute;
-      inset: -3px;
-      border-radius: 18px;
-      background: conic-gradient(
-        from 0deg,
-        transparent 0%,
-        rgba(255,255,255,0.85) 10%,
-        transparent 22%,
-        rgba(255,255,255,0.04) 50%,
-        transparent 62%,
-        rgba(255,255,255,0.85) 88%,
-        transparent 100%
-      );
-      opacity: 0;
-      animation: spin 3.5s linear infinite;
-      transition: opacity .3s ease;
-      z-index: 0;
-    }
-
-    /* mask the gap */
-    .soc .inner {
-      position: absolute;
-      inset: 1px;
-      background: rgba(15,15,15,0.95);
-      border-radius: 17px;
-      z-index: 1;
-    }
-
-    .soc i, .soc .soc-name {
-      position: relative;
-      z-index: 2;
-    }
-
-    .soc i {
-      font-size: 1.9rem;
-      line-height: 1;
-      color: var(--white);
-      transition: transform .3s var(--ease), color .3s;
-    }
-
-    .soc-name {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: .5px;
-      color: var(--silver);
-      transition: color .3s;
-    }
-
-    .soc:hover::before { opacity: 1; }
-
-    .soc:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0,0,0,.8);
-      border-color: transparent;
-    }
-
-    .soc:hover i          { transform: scale(1.18); color: var(--white); }
-    .soc:hover .soc-name  { color: var(--white); }
-
-    /* ══ RESPONSIVE ══ */
-    @media(max-width:520px){
-      body{padding:1.2rem .8rem;}
-      .card{padding:2.2rem 1.5rem 2.6rem;border-radius:26px;}
-      .name{font-size:3.2rem;}
-      .soc{padding:17px 8px 13px;}
-      .soc i{font-size:1.6rem;}
-    }
-    @media(max-width:360px){
-      .social-grid{grid-template-columns:repeat(2,1fr);}
-    }
-  </style>
+        @media(max-width:900px) {
+            .nav-links,
+            .hire-nav {
+                display: none;
+            }
+            .burger {
+                display: flex;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 44px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .kb-container {
+                grid-template-columns: 1fr;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .phase-grid {
+                grid-template-columns: 1fr;
+            }
+            .phase-tools-preview {
+                display: none;
+            }
+            .owasp-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .cta-strip {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .table-head,
+            .writeup-row {
+                grid-template-columns: 36px 1fr 100px 80px;
+            }
+            .th:nth-child(5),
+            .th:nth-child(6) {
+                display: none;
+            }
+            .writeup-row>*:nth-child(5) {
+                display: none;
+            }
+            .writeup-row>*:nth-child(6) {
+                display: none;
+            }
+        }
+        @media(max-width:600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .stats-row {
+                max-width: 100%;
+            }
+            .table-head {
+                display: none;
+            }
+            .writeup-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                padding: 16px;
+            }
+            .wr-num {
+                display: none;
+            }
+            .owasp-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-controls .nav-btn {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="#home" class="nav-logo syne">ali<span class="dot">.</span>sec</a>
+            <ul class="nav-links">
+                <li><a href="#home" class="active" data-en="Home" data-ar="الرئيسية">Home</a></li>
+                <li><a href="#about" data-en="About" data-ar="عني">About</a></li>
+                <li><a href="#projects" data-en="Projects" data-ar="المشاريع">Projects</a></li>
+                <li><a href="#owasp-kb" data-en="OWASP KB" data-ar="قاعدة OWASP">OWASP KB</a></li>
+                <li><a href="#methodology" data-en="Methodology" data-ar="المنهجية">Methodology</a></li>
+                <li><a href="#writeups" data-en="Writeups" data-ar="التقارير">Writeups</a></li>
+                <li><a href="#contact" data-en="Contact" data-ar="تواصل">Contact</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button class="nav-btn" id="langToggle">عربي</button>
+                <button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+                <a href="#contact" class="hire-nav" data-en="Hire Me" data-ar="وظفني">Hire Me</a>
+            </div>
+            <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#home" data-en="Home" data-ar="الرئيسية">Home <span>→</span></a>
+            <a href="#about" data-en="About" data-ar="عني">About <span>→</span></a>
+            <a href="#projects" data-en="Projects" data-ar="المشاريع">Projects <span>→</span></a>
+            <a href="#owasp-kb" data-en="OWASP KB" data-ar="قاعدة OWASP">OWASP KB <span>→</span></a>
+            <a href="#methodology" data-en="Methodology" data-ar="المنهجية">Methodology <span>→</span></a>
+            <a href="#writeups" data-en="Writeups" data-ar="التقارير">Writeups <span>→</span></a>
+            <a href="#contact" data-en="Contact" data-ar="تواصل">Contact <span>→</span></a>
+            <div style="display:flex;gap:8px;margin-top:14px;">
+                <button class="nav-btn" id="langToggleMob" style="flex:1;text-align:center;">عربي</button>
+                <button class="theme-toggle" id="themeToggleMob">🌙</button>
+            </div>
+            <a href="#contact" class="mob-hire" data-en="Hire Me" data-ar="وظفني">Hire Me</a>
+        </div>
+    </nav>
 
-<main class="card" role="main" itemscope itemtype="https://schema.org/Person">
+    <section id="home">
+        <div class="container">
+            <div class="hero-badge fade-up d1"><div class="dot"></div><span data-en="Available for remote freelance" data-ar="متاح للعمل الحر عن بُعد">Available for remote freelance</span></div>
+            <h1 class="hero-name syne fade-up d2"><span class="name-main" data-en="Ali" data-ar="علي">Ali</span><br><span class="muted-line" data-en="Al-Mansori" data-ar="المنصوري">Al-Mansori</span></h1>
+            <div class="typewriter-wrap fade-up d3"><span id="typewriter"></span><span class="tw-cursor">|</span></div>
+            <p class="hero-desc fade-up d4"><span data-en="I find vulnerabilities before attackers do. Specializing in <strong>web & API security testing</strong>, OWASP Top 10, and building the Arabic cybersecurity community through <strong>الفكر السيبراني</strong>." data-ar="أكتشف الثغرات قبل المهاجمين. متخصص في <strong>اختبار أمن الويب والـ API</strong>، OWASP Top 10، وبناء مجتمع الأمن السيبراني العربي من خلال <strong>الفكر السيبراني</strong>.">I find vulnerabilities before attackers do. Specializing in <strong>web & API security testing</strong>, OWASP Top 10, and building the Arabic cybersecurity community through <strong>الفكر السيبراني</strong>.</span></p>
+            <div class="hero-btns fade-up d5">
+                <a href="#projects" class="btn-primary" data-en="View Projects →" data-ar="المشاريع →">View Projects →</a>
+                <a href="#contact" class="btn-secondary" data-en="Download CV" data-ar="تحميل السيرة الذاتية">Download CV</a>
+            </div>
+            <div class="stats-row fade-up d5">
+                <div class="stat"><span class="stat-val syne" id="stat-repos">--</span><span class="stat-label" data-en="Repositories" data-ar="مستودعات">Repositories</span></div>
+                <div class="stat"><span class="stat-val syne" id="stat-stars">--</span><span class="stat-label" data-en="Stars" data-ar="نجوم">Stars</span></div>
+                <div class="stat"><span class="stat-val syne" id="stat-updated">--</span><span class="stat-label" data-en="Last Updated" data-ar="آخر تحديث">Last Updated</span></div>
+                <div class="stat"><span class="stat-val syne">2+</span><span class="stat-label" data-en="Years Exp." data-ar="سنوات خبرة">Years Exp.</span></div>
+            </div>
+            <div class="fade-up d6">
+                <p class="tools-label" data-en="Tools & Stack" data-ar="الأدوات">Tools & Stack</p>
+                <div class="tools-chips">
+                    <span class="chip">Burp Suite</span><span class="chip">Nuclei</span><span class="chip">FFUF</span><span class="chip">SQLMap</span><span class="chip">Nmap</span><span class="chip">Subfinder</span><span class="chip">Amass</span><span class="chip">Postman</span><span class="chip">Arjun</span><span class="chip">Python</span><span class="chip">Bash</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- 1 · Avatar -->
-  <div class="avatar-wrap">
-    <img class="avatar-img" src="profile.jpg" alt="Ali Al-Mansouri"
-         onerror="this.style.display='none';document.querySelector('.avatar-fb').style.display='flex';" />
-    <div class="avatar-fb" aria-hidden="true">🕷️</div>
-  </div>
+    <section id="about">
+        <div class="container">
+            <p class="section-label">// <span data-en="About" data-ar="عني">About</span></p>
+            <h2 class="section-title syne"><span data-en="Breaking things" data-ar="أكسر الأنظمة">Breaking things</span><br><span class="muted-line" data-en="to make them safer." data-ar="لأجعلها أكثر أماناً.">to make them safer.</span></h2>
+            <hr class="divider">
+            <div class="about-grid">
+                <div class="about-text">
+                    <p data-en="Security researcher specializing in web & API penetration testing since 2023. I document everything — methodologies, tools, OWASP findings — and share it with the Arabic cybersecurity community." data-ar="باحث أمني متخصص في اختبار اختراق الويب والـ API منذ 2023. أوثق كل شيء — المنهجيات، الأدوات، نتائج OWASP — وأشاركها مع مجتمع الأمن السيبراني العربي.">Security researcher specializing in web & API penetration testing since 2023. I document everything — methodologies, tools, OWASP findings — and share it with the Arabic cybersecurity community.</p>
+                    <p data-en="Creator of OWASP Top 10 references (Web & API), PortSwigger lab solutions, and pentest automation scripts. All available on GitHub." data-ar="منشئ مراجع OWASP Top 10 (الويب و API)، حلول مختبرات PortSwigger، وسكريبتات أتمتة الاختراق. كلها متاحة على GitHub.">Creator of OWASP Top 10 references (Web & API), PortSwigger lab solutions, and pentest automation scripts. All available on GitHub.</p>
+                    <a href="#projects" class="about-link" data-en="See my work →" data-ar="شاهد أعمالي →">See my work →</a>
+                </div>
+                <div class="skills-list" id="skillsList">
+                    <div class="skill-row"><div class="skill-meta"><span data-en="Web App Pentesting" data-ar="اختبار اختراق الويب">Web App Pentesting</span><span>90%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div></div>
+                    <div class="skill-row"><div class="skill-meta"><span data-en="API Security" data-ar="أمن API">API Security</span><span>75%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="75"></div></div></div>
+                    <div class="skill-row"><div class="skill-meta"><span data-en="Recon & OSINT" data-ar="الاستطلاع و OSINT">Recon & OSINT</span><span>85%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="85"></div></div></div>
+                    <div class="skill-row"><div class="skill-meta"><span data-en="Security Automation" data-ar="أتمتة الأمن">Security Automation</span><span>65%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="65"></div></div></div>
+                    <div class="skill-row"><div class="skill-meta"><span data-en="Bug Bounty" data-ar="Bug Bounty">Bug Bounty</span><span>60%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="60"></div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- 2 · Status -->
-  <span class="status">
-    <span class="dot" aria-hidden="true"></span>
-    Available for consulting
-  </span>
+    <section id="projects">
+        <div class="container">
+            <p class="section-label">// <span data-en="Projects" data-ar="المشاريع">Projects</span></p>
+            <h2 class="section-title syne"><span data-en="My Work" data-ar="أعمالي">My Work</span></h2>
+            <hr class="divider">
+            <div class="filter-row">
+                <button class="filter-btn active" data-filter="all" data-en="All" data-ar="الكل">All</button>
+                <button class="filter-btn" data-filter="live" data-en="Live" data-ar="مباشر">Live</button>
+                <button class="filter-btn" data-filter="progress" data-en="In Progress" data-ar="جارٍ">In Progress</button>
+            </div>
+            <div class="projects-grid" id="projectsGrid">
+                <div class="project-card" data-status="live">
+                    <div class="card-top"><span class="card-num syne">#01</span><span class="status-badge status-live"><span class="sdot"></span><span data-en="Live" data-ar="مباشر">Live</span></span></div>
+                    <h3 class="card-title syne" data-en="OWASP Top 10 2025" data-ar="OWASP Top 10 2025">OWASP Top 10 2025</h3>
+                    <p class="card-desc" data-en="Complete OWASP Top 10 2025 reference with deep vulnerability analysis and PortSwigger lab solutions." data-ar="مرجع كامل لـ OWASP Top 10 2025 مع تحليل عميق للثغرات وحلول مختبرات PortSwigger.">Complete OWASP Top 10 2025 reference with deep vulnerability analysis and PortSwigger lab solutions.</p>
+                    <div class="card-tools"><span class="card-tool">Markdown</span><span class="card-tool">Burp Suite</span></div>
+                    <div class="card-footer"><a href="https://github.com/AliAlMansorisec/OWASP-Top-10-2025" target="_blank" class="card-link" data-en="View on GitHub ↗" data-ar="عرض على GitHub ↗">View on GitHub ↗</a></div>
+                </div>
+                <div class="project-card" data-status="live">
+                    <div class="card-top"><span class="card-num syne">#02</span><span class="status-badge status-live"><span class="sdot"></span><span data-en="Live" data-ar="مباشر">Live</span></span></div>
+                    <h3 class="card-title syne" data-en="OWASP API Top 10" data-ar="OWASP API Top 10">OWASP API Top 10</h3>
+                    <p class="card-desc" data-en="Complete OWASP API Top 10 2023 reference with API security testing methodology." data-ar="مرجع كامل لـ OWASP API Top 10 2023 مع منهجية اختبار أمن API.">Complete OWASP API Top 10 2023 reference with API security testing methodology.</p>
+                    <div class="card-tools"><span class="card-tool">Postman</span><span class="card-tool">Burp Suite</span></div>
+                    <div class="card-footer"><a href="https://github.com/AliAlMansorisec/OWASP-API-Top-10" target="_blank" class="card-link" data-en="View on GitHub ↗" data-ar="عرض على GitHub ↗">View on GitHub ↗</a></div>
+                </div>
+                <div class="project-card" data-status="live">
+                    <div class="card-top"><span class="card-num syne">#03</span><span class="status-badge status-live"><span class="sdot"></span><span data-en="Live" data-ar="مباشر">Live</span></span></div>
+                    <h3 class="card-title syne" data-en="Web Pentest Methodology" data-ar="منهجية اختبار اختراق الويب">Web Pentest Methodology</h3>
+                    <p class="card-desc" data-en="Professional pentest workflow — Recon, Enumeration, Exploitation, Reporting." data-ar="سير عمل اختبار اختراق احترافي — الاستطلاع، الاستعراض، الاستغلال، التقرير.">Professional pentest workflow — Recon, Enumeration, Exploitation, Reporting.</p>
+                    <div class="card-tools"><span class="card-tool">Shell</span><span class="card-tool">Burp Suite</span><span class="card-tool">Nmap</span></div>
+                    <div class="card-footer"><a href="https://github.com/AliAlMansorisec/Web-Pentest-Methodology" target="_blank" class="card-link" data-en="View on GitHub ↗" data-ar="عرض على GitHub ↗">View on GitHub ↗</a></div>
+                </div>
+                <div class="project-card" data-status="live">
+                    <div class="card-top"><span class="card-num syne">#04</span><span class="status-badge status-live"><span class="sdot"></span><span data-en="Live" data-ar="مباشر">Live</span></span></div>
+                    <h3 class="card-title syne" data-en="Pentest Scripts" data-ar="سكريبتات الاختراق">Pentest Scripts</h3>
+                    <p class="card-desc" data-en="Custom scripts, payloads, wordlists, and automation tools for web pentesting." data-ar="سكريبتات مخصصة، payloads، قوائم كلمات، وأدوات أتمتة لاختبار اختراق الويب.">Custom scripts, payloads, wordlists, and automation tools for web pentesting.</p>
+                    <div class="card-tools"><span class="card-tool">Shell</span><span class="card-tool">Python</span></div>
+                    <div class="card-footer"><a href="https://github.com/AliAlMansorisec/pentest-scripts" target="_blank" class="card-link" data-en="View on GitHub ↗" data-ar="عرض على GitHub ↗">View on GitHub ↗</a></div>
+                </div>
+                <div class="project-card" data-status="live">
+                    <div class="card-top"><span class="card-num syne">#05</span><span class="status-badge status-live"><span class="sdot"></span><span data-en="Live" data-ar="مباشر">Live</span></span></div>
+                    <h3 class="card-title syne" data-en="PortSwigger Labs Solutions" data-ar="حلول مختبرات PortSwigger">PortSwigger Labs Solutions</h3>
+                    <p class="card-desc" data-en="Complete solutions for all PortSwigger Web Security Academy labs." data-ar="حلول كاملة لجميع مختبرات PortSwigger Web Security Academy.">Complete solutions for all PortSwigger Web Security Academy labs.</p>
+                    <div class="card-tools"><span class="card-tool">Burp Suite</span></div>
+                    <div class="card-footer"><a href="https://github.com/AliAlMansorisec/portswigger-labs-solutions" target="_blank" class="card-link" data-en="View on GitHub ↗" data-ar="عرض على GitHub ↗">View on GitHub ↗</a></div>
+                </div>
+                <div class="project-card" data-status="progress">
+                    <div class="card-top"><span class="card-num syne">#06</span><span class="status-badge status-prog"><span class="sdot"></span><span data-en="In Progress" data-ar="جارٍ">In Progress</span></span></div>
+                    <h3 class="card-title syne" data-en="AliAlMansorisec.github.io" data-ar="AliAlMansorisec.github.io">AliAlMansorisec.github.io</h3>
+                    <p class="card-desc" data-en="Personal website — portfolio, OWASP KB, methodology, and writeups." data-ar="الموقع الشخصي — معرض الأعمال، قاعدة OWASP، المنهجية، والتقارير.">Personal website — portfolio, OWASP KB, methodology, and writeups.</p>
+                    <div class="card-tools"><span class="card-tool">HTML</span><span class="card-tool">CSS</span><span class="card-tool">JS</span></div>
+                    <div class="card-footer"><span class="card-soon">🔒 <span data-en="Coming soon..." data-ar="قريباً...">Coming soon...</span></span></div>
+                </div>
+            </div>
+            <div class="cta-strip">
+                <div><p class="cta-title syne" data-en="Need a security assessment?" data-ar="تحتاج تقييم أمني؟">Need a security assessment?</p><p class="cta-sub" data-en="Available for remote freelance web & API security engagements." data-ar="متاح لمشاريع أمن الويب والـ API عن بُعد.">Available for remote freelance web & API security engagements.</p></div>
+                <a href="#contact" class="btn-primary" data-en="Get in Touch →" data-ar="تواصل معي →">Get in Touch →</a>
+            </div>
+        </div>
+    </section>
 
-  <!-- 3 · Name -->
-  <h1 class="name" itemprop="name">
-    <span>Ali</span> Al-Mansouri
-  </h1>
+    <section id="owasp-kb">
+        <div class="container">
+            <p class="section-label">// <span data-en="Knowledge Base" data-ar="قاعدة المعرفة">Knowledge Base</span></p>
+            <h2 class="section-title syne"><span data-en="OWASP" data-ar="OWASP">OWASP</span><br><span class="muted-line" data-en="Knowledge Base" data-ar="قاعدة المعرفة">Knowledge Base</span></h2>
+            <hr class="divider">
+            <div class="kb-container">
+                <div class="kb-column" id="kbWeb"></div>
+                <div class="kb-column" id="kbApi"></div>
+            </div>
+        </div>
+    </section>
 
-  <!-- 4 · Specialisation -->
-  <div class="spec-row" role="list">
-    <span class="spec" role="listitem">Web Security</span>
-    <span class="spec" role="listitem">Android Security</span>
-    <span class="spec" role="listitem">BAC · IDOR · Business Logic</span>
-  </div>
+    <section id="methodology">
+        <div class="container">
+            <p class="section-label">// <span data-en="Methodology" data-ar="المنهجية">Methodology</span></p>
+            <h2 class="section-title syne"><span data-en="Pentest" data-ar="منهجية">Pentest</span><br><span class="muted-line" data-en="Methodology" data-ar="الاختراق">Methodology</span></h2>
+            <hr class="divider">
+            <div class="flow-bar">
+                <button class="flow-step-btn active" data-phase="0" data-en="01 Recon" data-ar="01 الاستطلاع">01 Recon</button><span class="flow-arrow">→</span>
+                <button class="flow-step-btn" data-phase="1" data-en="02 Mapping" data-ar="02 الرسم">02 Mapping</button><span class="flow-arrow">→</span>
+                <button class="flow-step-btn" data-phase="2" data-en="03 Vuln Analysis" data-ar="03 التحليل">03 Vuln Analysis</button><span class="flow-arrow">→</span>
+                <button class="flow-step-btn" data-phase="3" data-en="04 Exploitation" data-ar="04 الاستغلال">04 Exploitation</button><span class="flow-arrow">→</span>
+                <button class="flow-step-btn" data-phase="4" data-en="05 Post-Exploit" data-ar="05 ما بعد">05 Post-Exploit</button><span class="flow-arrow">→</span>
+                <button class="flow-step-btn" data-phase="5" data-en="06 Reporting" data-ar="06 التقرير">06 Reporting</button>
+            </div>
+            <div class="phases-list" id="phasesList">
+                <div class="phase-item"><div class="phase-header open" data-phase="0"><div class="phase-left"><span class="phase-num syne">#01</span><div><p class="phase-name syne" data-en="Reconnaissance" data-ar="الاستطلاع">Reconnaissance</p><p class="phase-sub" data-en="Passive & Active Information Gathering" data-ar="جمع المعلومات السلبي والنشط">Passive & Active Information Gathering</p></div></div><div class="phase-right"><div class="phase-tools-preview"><span class="phase-tool-tag">Subfinder</span><span class="phase-tool-tag">Amass</span><span class="phase-tool-tag">Shodan</span></div><span class="phase-chevron open">▾</span></div></div><div class="phase-content open"><div class="phase-grid"><div><p class="phase-desc" data-en="The foundation of every engagement." data-ar="أساس كل عملية اختبار.">The foundation of every engagement.</p><div class="phase-steps"><div class="phase-step"><span class="check">✓</span><span>Identify scope — domains, subdomains, IPs</span></div><div class="phase-step"><span class="check">✓</span><span>Passive recon — Shodan, Google Dorks</span></div><div class="phase-step"><span class="check">✓</span><span>Subdomain enum — Subfinder, Amass</span></div><div class="phase-step"><span class="check">✓</span><span>Certificate transparency — crt.sh</span></div></div></div><div class="phase-sidebar"><div><p class="sidebar-label" data-en="Tools" data-ar="الأدوات">Tools</p><div class="phase-tools-full"><span class="phase-tool">Subfinder</span><span class="phase-tool">Amass</span><span class="phase-tool">TheHarvester</span><span class="phase-tool">Shodan</span></div></div><div class="phase-tip"><p class="tip-label">// Pro Tip</p><p class="tip-text">"Never skip passive recon."</p></div></div></div></div></div>
+                <div class="phase-item"><div class="phase-header" data-phase="1"><div class="phase-left"><span class="phase-num syne">#02</span><div><p class="phase-name syne" data-en="Mapping & Enumeration" data-ar="الرسم والاستعراض">Mapping & Enumeration</p><p class="phase-sub" data-en="Deep Surface Analysis" data-ar="تحليل عميق للسطح">Deep Surface Analysis</p></div></div><div class="phase-right"><div class="phase-tools-preview"><span class="phase-tool-tag">Nmap</span><span class="phase-tool-tag">FFUF</span><span class="phase-tool-tag">Arjun</span></div><span class="phase-chevron">▾</span></div></div><div class="phase-content"><div class="phase-grid"><div><p class="phase-desc" data-en="Discover all entry points, services, and parameters." data-ar="اكتشف جميع نقاط الدخول والخدمات والمعاملات.">Discover all entry points, services, and parameters.</p><div class="phase-steps"><div class="phase-step"><span class="check">✓</span><span>Port scanning</span></div><div class="phase-step"><span class="check">✓</span><span>Directory bruteforce</span></div><div class="phase-step"><span class="check">✓</span><span>Parameter discovery</span></div><div class="phase-step"><span class="check">✓</span><span>API enumeration — REST, GraphQL</span></div></div></div><div class="phase-sidebar"><div><p class="sidebar-label" data-en="Tools" data-ar="الأدوات">Tools</p><div class="phase-tools-full"><span class="phase-tool">Nmap</span><span class="phase-tool">FFUF</span><span class="phase-tool">Feroxbuster</span><span class="phase-tool">Arjun</span></div></div><div class="phase-tip"><p class="tip-label">// Pro Tip</p><p class="tip-text">"Map everything before exploiting."</p></div></div></div></div></div>
+                <div class="phase-item"><div class="phase-header" data-phase="2"><div class="phase-left"><span class="phase-num syne">#03</span><div><p class="phase-name syne" data-en="Vulnerability Analysis" data-ar="تحليل الثغرات">Vulnerability Analysis</p><p class="phase-sub" data-en="Identify Weaknesses" data-ar="تحديد نقاط الضعف">Identify Weaknesses</p></div></div><div class="phase-right"><div class="phase-tools-preview"><span class="phase-tool-tag">Burp Suite</span><span class="phase-tool-tag">Nuclei</span></div><span class="phase-chevron">▾</span></div></div><div class="phase-content"><div class="phase-grid"><div><p class="phase-desc" data-en="Analyze all entry points for vulnerabilities." data-ar="حلل جميع نقاط الدخول بحثاً عن ثغرات.">Analyze all entry points for vulnerabilities.</p><div class="phase-steps"><div class="phase-step"><span class="check">✓</span><span>OWASP Top 10 manual review</span></div><div class="phase-step"><span class="check">✓</span><span>Input validation testing</span></div><div class="phase-step"><span class="check">✓</span><span>Authorization testing — IDOR</span></div><div class="phase-step"><span class="check">✓</span><span>Business logic flaws</span></div></div></div><div class="phase-sidebar"><div><p class="sidebar-label" data-en="Tools" data-ar="الأدوات">Tools</p><div class="phase-tools-full"><span class="phase-tool">Burp Suite</span><span class="phase-tool">Nuclei</span><span class="phase-tool">SQLMap</span><span class="phase-tool">XSStrike</span></div></div><div class="phase-tip"><p class="tip-label">// Pro Tip</p><p class="tip-text">"Automated scanners miss business logic."</p></div></div></div></div></div>
+                <div class="phase-item"><div class="phase-header" data-phase="3"><div class="phase-left"><span class="phase-num syne">#04</span><div><p class="phase-name syne" data-en="Exploitation" data-ar="الاستغلال">Exploitation</p><p class="phase-sub" data-en="Controlled Proof of Concept" data-ar="إثبات مفهوم خاضع للسيطرة">Controlled Proof of Concept</p></div></div><div class="phase-right"><div class="phase-tools-preview"><span class="phase-tool-tag">Burp Suite</span><span class="phase-tool-tag">SQLMap</span></div><span class="phase-chevron">▾</span></div></div><div class="phase-content"><div class="phase-grid"><div><p class="phase-desc" data-en="Exploit confirmed vulnerabilities within scope." data-ar="استغل الثغرات المؤكدة ضمن النطاق.">Exploit confirmed vulnerabilities within scope.</p><div class="phase-steps"><div class="phase-step"><span class="check">✓</span><span>SQLi — error-based, blind, union</span></div><div class="phase-step"><span class="check">✓</span><span>XSS — reflected, stored, DOM</span></div><div class="phase-step"><span class="check">✓</span><span>IDOR — object ID manipulation</span></div><div class="phase-step"><span class="check">✓</span><span>SSRF — internal network</span></div></div></div><div class="phase-sidebar"><div><p class="sidebar-label" data-en="Tools" data-ar="الأدوات">Tools</p><div class="phase-tools-full"><span class="phase-tool">Burp Suite</span><span class="phase-tool">SQLMap</span><span class="phase-tool">XSStrike</span><span class="phase-tool">JWT Tool</span></div></div><div class="phase-tip"><p class="tip-label">// Pro Tip</p><p class="tip-text">"Always have written authorization."</p></div></div></div></div></div>
+                <div class="phase-item"><div class="phase-header" data-phase="4"><div class="phase-left"><span class="phase-num syne">#05</span><div><p class="phase-name syne" data-en="Post-Exploitation" data-ar="ما بعد الاستغلال">Post-Exploitation</p><p class="phase-sub" data-en="Impact Assessment" data-ar="تقييم التأثير">Impact Assessment</p></div></div><div class="phase-right"><div class="phase-tools-preview"><span class="phase-tool-tag">Manual</span><span class="phase-tool-tag">CVSS</span></div><span class="phase-chevron">▾</span></div></div><div class="phase-content"><div class="phase-grid"><div><p class="phase-desc" data-en="Assess real-world impact." data-ar="قيّم التأثير الحقيقي.">Assess real-world impact.</p><div class="phase-steps"><div class="phase-step"><span class="check">✓</span><span>Data exposure — PII, credentials</span></div><div class="phase-step"><span class="check">✓</span><span>Privilege escalation</span></div><div class="phase-step"><span class="check">✓</span><span>Chain vulnerabilities</span></div><div class="phase-step"><span class="check">✓</span><span>CVSS scoring</span></div></div></div><div class="phase-sidebar"><div><p class="sidebar-label" data-en="Tools" data-ar="الأدوات">Tools</p><div class="phase-tools-full"><span class="phase-tool">Burp Suite</span><span class="phase-tool">Manual Analysis</span><span class="phase-tool">CVSS Calc</span></div></div><div class="phase-tip"><p class="tip-label">// Pro Tip</p><p class="tip-text">"Chain vulnerabilities for maximum impact."</p></div></div></div></div></div>
+                <div class="phase-item"><div class="phase-header" data-phase="5"><div class="phase-left"><span class="phase-num syne">#06</span><div><p class="phase-name syne" data-en="Reporting" data-ar="التقرير">Reporting</p><p class="phase-sub" data-en="Clear, Actionable Documentation" data-ar="توثيق واضح وقابل للتنفيذ">Clear, Actionable Documentation</p></div></div><div class="phase-right"><div class="phase-tools-preview"><span class="phase-tool-tag">Markdown</span><span class="phase-tool-tag">CVSS</span></div><span class="phase-chevron">▾</span></div></div><div class="phase-content"><div class="phase-grid"><div><p class="phase-desc" data-en="Write for both technical teams and management." data-ar="اكتب للفريق التقني والإدارة.">Write for both technical teams and management.</p><div class="phase-steps"><div class="phase-step"><span class="check">✓</span><span>Executive summary</span></div><div class="phase-step"><span class="check">✓</span><span>Finding per vuln — CVSS</span></div><div class="phase-step"><span class="check">✓</span><span>Proof of concept — screenshots</span></div><div class="phase-step"><span class="check">✓</span><span>Remediation — actionable fix</span></div></div></div><div class="phase-sidebar"><div><p class="sidebar-label" data-en="Tools" data-ar="الأدوات">Tools</p><div class="phase-tools-full"><span class="phase-tool">Markdown</span><span class="phase-tool">Notion</span><span class="phase-tool">Dradis</span></div></div><div class="phase-tip"><p class="tip-label">// Pro Tip</p><p class="tip-text">"If the developer cannot reproduce it, the report is not good enough."</p></div></div></div></div></div>
+            </div>
+        </div>
+    </section>
 
-  <!-- divider -->
-  <div class="rule" aria-hidden="true"></div>
+    <section id="writeups">
+        <div class="container">
+            <p class="section-label">// <span data-en="Writeups" data-ar="التقارير">Writeups</span></p>
+            <h2 class="section-title syne"><span data-en="CTF & Bug Bounty" data-ar="CTF وBug Bounty">CTF & Bug Bounty</span></h2>
+            <hr class="divider">
+            <div class="writeups-table">
+                <div class="table-head"><span class="th">#</span><span class="th" data-en="Title" data-ar="العنوان">Title</span><span class="th" data-en="Platform" data-ar="المنصة">Platform</span><span class="th" data-en="Category" data-ar="الفئة">Category</span><span class="th" data-en="Difficulty" data-ar="الصعوبة">Difficulty</span><span class="th" data-en="Link" data-ar="الرابط">Link</span></div>
+                <div id="writeupsBody">
+                    <div class="writeup-row"><span class="wr-num syne">#01</span><span class="wr-title">SQL Injection — Auth Bypass</span><span class="wr-platform">TryHackMe</span><span><span class="cat-tag">SQLi</span></span><span class="wr-diff">Easy</span><span><span class="soon-tag">🔒 Soon</span></span></div>
+                    <div class="writeup-row"><span class="wr-num syne">#02</span><span class="wr-title">XSS — Stored Cross-Site Scripting</span><span class="wr-platform">PortSwigger</span><span><span class="cat-tag">XSS</span></span><span class="wr-diff">Medium</span><span><span class="soon-tag">🔒 Soon</span></span></div>
+                    <div class="writeup-row"><span class="wr-num syne">#03</span><span class="wr-title">IDOR — Broken Object Level Auth</span><span class="wr-platform">HackTheBox</span><span><span class="cat-tag">IDOR</span></span><span class="wr-diff">Medium</span><span><span class="soon-tag">🔒 Soon</span></span></div>
+                    <div class="writeup-row"><span class="wr-num syne">#04</span><span class="wr-title">SSRF — Internal Service Discovery</span><span class="wr-platform">PortSwigger</span><span><span class="cat-tag">SSRF</span></span><span class="wr-diff">Hard</span><span><span class="soon-tag">🔒 Soon</span></span></div>
+                    <div class="writeup-row"><span class="wr-num syne">#05</span><span class="wr-title">JWT — Algorithm Confusion Attack</span><span class="wr-platform">PortSwigger</span><span><span class="cat-tag">JWT</span></span><span class="wr-diff">Hard</span><span><span class="soon-tag">🔒 Soon</span></span></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- 5 · CV Button with spinning ring -->
-  <div class="cv-btn-wrap">
-    <a href="cv.pdf" class="cv-btn" download aria-label="Download CV">
-      <span class="shine" aria-hidden="true"></span>
-      <i class="fa-solid fa-arrow-down-to-line" aria-hidden="true"></i>
-      Download CV
-    </a>
-  </div>
+    <section id="contact">
+        <div class="container">
+            <p class="section-label">// <span data-en="Contact" data-ar="تواصل">Contact</span></p>
+            <h2 class="section-title syne"><span data-en="Let's Work" data-ar="لنعمل">Let's Work</span><br><span class="muted-line" data-en="Together" data-ar="معاً">Together</span></h2>
+            <hr class="divider">
+            <div class="contact-grid">
+                <div>
+                    <form id="contactForm">
+                        <div class="form-row"><div class="field"><label data-en="Name" data-ar="الاسم">Name</label><input type="text" name="name" placeholder="Your name" required></div><div class="field"><label data-en="Email" data-ar="الإيميل">Email</label><input type="email" name="email" placeholder="your@email.com" required></div></div>
+                        <div class="field"><label data-en="Reason" data-ar="السبب">Reason</label><select name="reason" required><option value="" disabled selected data-en="Select a reason..." data-ar="اختر سبباً...">Select a reason...</option><option>Remote freelance engagement</option><option>Bug bounty collaboration</option><option>Security consultation</option></select></div>
+                        <div class="field"><label data-en="Message" data-ar="الرسالة">Message</label><textarea name="message" placeholder="Describe your project..." required></textarea></div>
+                        <div class="form-footer"><span class="form-note" data-en="Typically responds within 24h" data-ar="يرد عادةً خلال 24 ساعة">Typically responds within 24h</span><button type="submit" class="btn-primary" data-en="Send Message →" data-ar="إرسال الرسالة →">Send Message →</button></div>
+                    </form>
+                    <div class="success-box" id="successBox"><div class="success-icon">✓</div><p class="success-title syne" data-en="Message sent." data-ar="تم الإرسال.">Message sent.</p><p class="success-sub" data-en="I'll get back to you within 24 hours." data-ar="سأرد عليك خلال 24 ساعة.">I'll get back to you within 24 hours.</p><button class="reset-btn" id="resetBtn" data-en="Send another →" data-ar="إرسال رسالة أخرى →">Send another →</button></div>
+                </div>
+                <div class="contact-side">
+                    <div><p class="section-label" style="margin-bottom:14px" data-en="Find me on" data-ar="تجدني على">Find me on</p><div class="socials-list">
+                        <a href="https://github.com/AliAlMansorisec" target="_blank" class="social-item"><span class="social-icon">⌥</span><div class="social-info"><p class="social-name">GitHub</p><p class="social-handle">@AliAlMansorisec</p></div><span class="social-desc">Projects</span></a>
+                        <a href="https://x.com/AliAlMansoriSec" target="_blank" class="social-item"><span class="social-icon">✕</span><div class="social-info"><p class="social-name">X / Twitter</p><p class="social-handle">@AliAlMansoriSec</p></div><span class="social-desc">Updates</span></a>
+                        <a href="https://linkedin.com" target="_blank" class="social-item"><span class="social-icon">in</span><div class="social-info"><p class="social-name">LinkedIn</p><p class="social-handle">Ali Al-Mansori</p></div><span class="social-desc">Network</span></a>
+                        <a href="mailto:your-email@example.com" class="social-item"><span class="social-icon">@</span><div class="social-info"><p class="social-name">Email</p><p class="social-handle">your-email@example.com</p></div><span class="social-desc">Direct</span></a>
+                    </div></div>
+                    <div class="avail-box"><p class="section-label" style="margin-bottom:10px" data-en="Availability" data-ar="التوفر">Availability</p><div class="avail-row"><span class="avail-key">Remote Work</span><span class="avail-val">✓ Available</span></div><div class="avail-row"><span class="avail-key">Freelance</span><span class="avail-val">✓ Open</span></div><div class="avail-row"><span class="avail-key">Full-time</span><span class="avail-val">◎ Selective</span></div><div class="avail-row"><span class="avail-key">Response</span><span class="avail-val">&lt; 24h</span></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- 6 · Social -->
-  <p class="social-label">Connect</p>
-  <nav class="social-grid" aria-label="Social profiles">
+    <footer>
+        <div class="container"><div class="footer-inner"><span class="footer-logo syne">ali<span class="dot">.</span>sec</span><span class="footer-copy">Web & API Penetration Tester — 2025</span><div class="footer-links"><a href="https://github.com/AliAlMansorisec" target="_blank">GitHub</a><a href="https://x.com/AliAlMansoriSec" target="_blank">X</a><a href="https://linkedin.com" target="_blank">LinkedIn</a><a href="#home">Top ↑</a></div></div></div>
+    </footer>
 
-    <a href="https://github.com/AliAlMansori"
-       class="soc github" target="_blank" rel="noopener noreferrer"
-       aria-label="GitHub" itemprop="sameAs">
-      <span class="inner" aria-hidden="true"></span>
-      <i class="fa-brands fa-github"></i>
-      <span class="soc-name">GitHub</span>
-    </a>
+    <script>
+        let theme = localStorage.getItem('theme') || 'dark';
+        const html = document.documentElement;
 
-    <a href="https://x.com/username"
-       class="soc x" target="_blank" rel="noopener noreferrer"
-       aria-label="X / Twitter" itemprop="sameAs">
-      <span class="inner" aria-hidden="true"></span>
-      <i class="fa-brands fa-x-twitter"></i>
-      <span class="soc-name">X</span>
-    </a>
+        function applyTheme(t) { theme = t;
+            html.setAttribute('data-theme', t);
+            localStorage.setItem('theme', t); const icon = t === 'dark' ? '🌙' : '☀️';
+            document.getElementById('themeToggle').textContent = icon;
+            document.getElementById('themeToggleMob').textContent = icon; }
+        applyTheme(theme);
+        document.getElementById('themeToggle').addEventListener('click', () => applyTheme(theme === 'dark' ? 'light' :
+            'dark'));
+        document.getElementById('themeToggleMob').addEventListener('click', () => applyTheme(theme === 'dark' ? 'light' :
+            'dark'));
 
-    <a href="https://linkedin.com/in/username"
-       class="soc linkedin" target="_blank" rel="noopener noreferrer"
-       aria-label="LinkedIn" itemprop="sameAs">
-      <span class="inner" aria-hidden="true"></span>
-      <i class="fa-brands fa-linkedin-in"></i>
-      <span class="soc-name">LinkedIn</span>
-    </a>
+        let lang = 'en';
 
-    <a href="https://t.me/username"
-       class="soc telegram" target="_blank" rel="noopener noreferrer"
-       aria-label="Telegram">
-      <span class="inner" aria-hidden="true"></span>
-      <i class="fa-brands fa-telegram"></i>
-      <span class="soc-name">Telegram</span>
-    </a>
+        function applyLang(l) { lang = l;
+            html.lang = l;
+            html.dir = l === 'ar' ? 'rtl' : 'ltr';
+            document.body.classList.toggle('ar', l === 'ar');
+            document.getElementById('langToggle').textContent = l === 'en' ? 'عربي' : 'EN';
+            document.getElementById('langToggleMob').textContent = l === 'en' ? 'عربي' : 'EN';
+            document.querySelectorAll('[data-en][data-ar]').forEach(el => { const val = el.getAttribute('data-' + l); if (
+                    val) el.innerHTML = val; });
+            document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(el => { const en = el
+                    .getAttribute('data-en-placeholder'); const ar = el.getAttribute('data-ar-placeholder'); if (en && ar)
+                    el.placeholder = l === 'en' ? en : ar; }); }
+        document.getElementById('langToggle').addEventListener('click', () => applyLang(lang === 'en' ? 'ar' : 'en'));
+        document.getElementById('langToggleMob').addEventListener('click', () => applyLang(lang === 'en' ? 'ar' : 'en'));
 
-    <a href="https://instagram.com/username"
-       class="soc instagram" target="_blank" rel="noopener noreferrer"
-       aria-label="Instagram" itemprop="sameAs">
-      <span class="inner" aria-hidden="true"></span>
-      <i class="fa-brands fa-instagram"></i>
-      <span class="soc-name">Instagram</span>
-    </a>
+        const navbar = document.getElementById('navbar');
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 30); let cur = '';
+            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 130) cur = s.id; });
+            document.querySelectorAll('.nav-links a').forEach(a => { a.classList.toggle('active', a.getAttribute(
+                    'href') === '#' + cur); }); }, { passive: true });
 
-    <a href="mailto:your.email@example.com"
-       class="soc email" aria-label="Email">
-      <span class="inner" aria-hidden="true"></span>
-      <i class="fa-regular fa-envelope"></i>
-      <span class="soc-name">Email</span>
-    </a>
+        const burger = document.getElementById('burger');
+        const mob = document.getElementById('mobileMenu');
+        burger.addEventListener('click', () => { burger.classList.toggle('open');
+            mob.classList.toggle('open'); });
+        mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { burger.classList.remove('open');
+            mob.classList.remove('open'); }));
 
-  </nav>
+        const phrases = { en: ['Web Penetration Tester', 'API Security Researcher', 'Bug Bounty Hunter',
+                'Cybersecurity Educator'
+            ], ar: ['مختبر اختراق ويب', 'باحث أمن API', 'صائد مكافآت الأخطاء', 'مُعلّم الأمن السيبراني'] };
+        let twIdx = 0,
+            twChar = 0,
+            twDel = false;
+        const twEl = document.getElementById('typewriter');
 
-</main>
+        function typewrite() { const word = phrases[lang][twIdx]; if (!twDel && twChar < word.length) { twEl.textContent =
+                    word.slice(0, ++twChar);
+                setTimeout(typewrite, 60); } else if (!twDel) { twDel = true;
+                setTimeout(typewrite, 1800); } else if (twDel && twChar > 0) { twEl.textContent = word.slice(0, --twChar);
+                setTimeout(typewrite, 36); } else { twDel = false;
+                twIdx = (twIdx + 1) % phrases[lang].length;
+                setTimeout(typewrite, 200); } }
+        typewrite();
 
+        new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll(
+                    '.skill-fill').forEach(f => f.style.width = f.dataset.pct + '%'); } }); }, { threshold: 0.3 }).observe(
+            document.getElementById('skillsList'));
+
+        document.querySelectorAll('[data-filter]').forEach(btn => btn.addEventListener('click', () => { document
+                .querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active'); const f = btn.dataset.filter;
+            document.querySelectorAll('#projectsGrid .project-card').forEach(c => { c.classList.toggle('hidden', f !==
+                    'all' && c.dataset.status !== f); }); }));
+
+        document.querySelectorAll('.phase-header').forEach(header => { header.addEventListener('click', () => { const
+                    content = header.nextElementSibling; const chevron = header.querySelector('.phase-chevron');
+                const isOpen = content.classList.contains('open'); const idx = parseInt(header.dataset.phase);
+                document.querySelectorAll('.phase-content').forEach(c => c.classList.remove('open'));
+                document.querySelectorAll('.phase-header').forEach(h => h.classList.remove('open'));
+                document.querySelectorAll('.phase-chevron').forEach(ch => ch.classList.remove('open'));
+                document.querySelectorAll('.flow-step-btn').forEach(b => b.classList.remove('active')); if (!isOpen) {
+                    content.classList.add('open');
+                    header.classList.add('open');
+                    chevron.classList.add('open');
+                    document.querySelectorAll('.flow-step-btn')[idx]?.classList.add('active'); } }); });
+        document.querySelectorAll('.flow-step-btn').forEach((btn, i) => { btn.addEventListener('click', () => { const h =
+                    document.querySelectorAll('.phase-header')[i]; if (h) h.click(); }); });
+
+        document.getElementById('contactForm').addEventListener('submit', e => { e.preventDefault();
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('successBox').style.display = 'flex'; });
+        document.getElementById('resetBtn').addEventListener('click', () => { document.getElementById('contactForm')
+                .reset();
+            document.getElementById('contactForm').style.display = 'block';
+            document.getElementById('successBox').style.display = 'none'; });
+
+        document.querySelectorAll('.fade-up').forEach(el => { el.style.animationPlayState = 'paused';
+            new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { el.style.animationPlayState =
+                        'running'; } }, { threshold: 0.1 }).observe(el); });
+
+        async function fetchGitHubStats() {
+            try {
+                const res = await fetch('https://api.github.com/users/AliAlMansorisec/repos?per_page=50');
+                const repos = await res.json();
+                const publicRepos = repos.filter(r => !r.private);
+                document.getElementById('stat-repos').textContent = publicRepos.length;
+                const stars = publicRepos.reduce((sum, r) => sum + r.stargazers_count, 0);
+                document.getElementById('stat-stars').textContent = stars;
+                const dates = publicRepos.map(r => new Date(r.updated_at));
+                const latest = new Date(Math.max(...dates));
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                document.getElementById('stat-updated').textContent = months[latest.getMonth()] + ' ' + latest
+                    .getFullYear();
+            } catch (e) {
+                document.getElementById('stat-repos').textContent = '7';
+                document.getElementById('stat-stars').textContent = '1';
+                document.getElementById('stat-updated').textContent = 'Jun 2026';
+            }
+        }
+        fetchGitHubStats();
+
+        const owaspWebData = [
+            { code: 'A01', name: 'Broken Access Control', files: ['05-Path-Traversal.md', '06-CSRF.md'] },
+            { code: 'A02', name: 'Cryptographic Failures', files: ['README.md'] },
+            { code: 'A03', name: 'Injection', files: ['01-SQL-Injection.md', '02-NoSQL-Injection.md',
+                    '03-Command-Injection.md', '04-Prototype-Pollution.md', '06-XSS.md', '07-DOM-Based.md',
+                    '08-SSTI.md', '09-XXE.md', '10-Web-LLM.md', '11-GraphQL.md'
+                ] },
+            { code: 'A04', name: 'Insecure Design', files: ['01-Business-Logic.md'] },
+            { code: 'A05', name: 'Security Misconfiguration', files: ['04-Web-Cache-Deception.md',
+                    '05-Clickjacking.md', '06-Host-Header.md', '07-Request-Smuggling.md',
+                    '08-Info-Disclosure.md', '09-File-Upload.md', '10-CORS.md', '11-Web-Cache-Poisoning.md'
+                ] },
+            { code: 'A06', name: 'Vulnerable Components', files: ['README.md'] },
+            { code: 'A07', name: 'Auth Failures', files: ['04-JWT-Attacks.md', '05-WebSockets.md', '06-OAuth.md'] },
+            { code: 'A08', name: 'Data Integrity', files: ['02-Insecure-Deserialization.md',
+            '03-Race-Conditions.md'] },
+            { code: 'A09', name: 'Logging & Monitoring', files: ['README.md'] },
+            { code: 'A10', name: 'SSRF', files: ['README.md'] }
+        ];
+
+        const owaspApiData = [
+            { code: 'API1', name: 'BOLA', files: ['API1_BOLA.md'] },
+            { code: 'API2', name: 'Broken Authentication', files: ['API2_Broken_Authentication.md'] },
+            { code: 'API3', name: 'BOPLA', files: ['API3_BOPLA.md'] },
+            { code: 'API4', name: 'Unrestricted Resource', files: ['API4_Unrestricted_Resource.md'] },
+            { code: 'API5', name: 'BFLA', files: ['API5_BFLA.md'] },
+            { code: 'API6', name: 'Business Flows', files: ['API6_Business_Flows.md'] },
+            { code: 'API7', name: 'SSRF', files: ['API7_SSRF.md'] },
+            { code: 'API8', name: 'Security Misconfig', files: ['API8_Security_Misconfiguration.md'] },
+            { code: 'API9', name: 'Inventory Management', files: ['API9_Inventory_Management.md'] },
+            { code: 'API10', name: 'Unsafe Consumption', files: ['API10_Unsafe_Consumption.md'] }
+        ];
+
+        function buildOWASPKB(containerId, data, baseUrl, dotClass, titleEn, titleAr) {
+            const container = document.getElementById(containerId);
+            const title = document.createElement('div');
+            title.className = 'kb-column-title syne';
+            title.innerHTML = `<span class="kb-dot ${dotClass}"></span><span data-en="${titleEn}" data-ar="${titleAr}">${titleEn}</span>`;
+            container.appendChild(title);
+            const accordion = document.createElement('div');
+            accordion.className = 'kb-accordion';
+            data.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'kb-item';
+                const header = document.createElement('div');
+                header.className = 'kb-header';
+                header.innerHTML = `
+                    <div class="kb-header-left">
+                        <span class="kb-code syne">${item.code}</span>
+                        <span class="kb-name">${item.name}</span>
+                    </div>
+                    <span class="kb-count">${item.files.length} files</span>
+                    <span class="kb-chevron">▾</span>
+                `;
+                const content = document.createElement('div');
+                content.className = 'kb-content';
+                const filesDiv = document.createElement('div');
+                filesDiv.className = 'kb-files';
+                item.files.forEach(file => {
+                    const fileDiv = document.createElement('div');
+                    fileDiv.className = 'kb-file';
+                    const fileName = file.replace('.md', '');
+                    fileDiv.innerHTML = `
+                        <span class="kb-file-icon">📄</span>
+                        <a href="${baseUrl}/${item.code}-${item.name.replace(/\s+/g, '-')}/${file}" target="_blank" class="kb-file-link">${fileName}</a>
+                    `;
+                    filesDiv.appendChild(fileDiv);
+                });
+                content.appendChild(filesDiv);
+                itemDiv.appendChild(header);
+                itemDiv.appendChild(content);
+                header.addEventListener('click', () => {
+                    const isOpen = content.classList.contains('open');
+                    document.querySelectorAll(`#${containerId} .kb-content`).forEach(c => c.classList
+                        .remove('open'));
+                    document.querySelectorAll(`#${containerId} .kb-header`).forEach(h => h.classList
+                        .remove('open'));
+                    document.querySelectorAll(`#${containerId} .kb-chevron`).forEach(ch => ch.classList
+                        .remove('open'));
+                    document.querySelectorAll(`#${containerId} .kb-item`).forEach(it => it.classList
+                        .remove('open'));
+                    if (!isOpen) {
+                        content.classList.add('open');
+                        header.classList.add('open');
+                        header.querySelector('.kb-chevron').classList.add('open');
+                        itemDiv.classList.add('open');
+                    }
+                });
+                accordion.appendChild(itemDiv);
+            });
+            container.appendChild(accordion);
+        }
+
+        buildOWASPKB('kbWeb', owaspWebData, 'https://github.com/AliAlMansorisec/OWASP-Top-10-2025/blob/main', 'web',
+            'OWASP Web Top 10', 'OWASP Web Top 10');
+        buildOWASPKB('kbApi', owaspApiData, 'https://github.com/AliAlMansorisec/OWASP-API-Top-10/blob/main', 'api',
+            'OWASP API Top 10', 'OWASP API Top 10');
+    </script>
 </body>
 </html>
